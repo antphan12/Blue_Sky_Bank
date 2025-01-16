@@ -2,27 +2,20 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React, {useState} from 'react'
 
-import { z } from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { Button } from "@/components/ui/button"
+import {z} from "zod"
+import {zodResolver} from "@hookform/resolvers/zod"
+import {useForm} from "react-hook-form"
+import {Button} from "@/components/ui/button"
 import {
   Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
 } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
 import CustomInput from './CustomInput'
-import { authFormSchema } from '@/lib/utils'
-import { Loader2 } from 'lucide-react'
-import {useRouter } from 'next/navigation'
-import { getLoggedInUser, signIn, signUp } from '@/lib/actions/user.actions'
+import {authFormSchema} from '@/lib/utils'
+import {Loader2} from 'lucide-react'
+import {useRouter} from 'next/navigation'
+import {signIn, signUp} from '@/lib/actions/user.actions'
 import PlaidLink from './PlaidLink'
 
 const AuthenticationForm = ({type}: {type: string}) => {
@@ -46,24 +39,24 @@ const AuthenticationForm = ({type}: {type: string}) => {
         
         try{
             //Using Appwrite to sign up and creating a plaid token
-            const userData = {
-                firstName: data.firstName!,
-                lastName: data.lastName!,
-                address1: data.address1!,
-                city: data.city!,
-                state: data.state!,
-                postalCode: data.postalCode!,
-                dateOfBirth: data.dateOfBirth!,
-                ssn: data.ssn!,
-                email: data.email,
-                password: data.password,
-            }
-
-            if (type === 'sign-up') {
-                    const newUser = await signUp(userData);
-                    
-                    setUser(newUser);
+            if(type === 'sign-up'){
+                const userData = {
+                    firstName: data.firstName!,
+                    lastName: data.lastName!,
+                    address1: data.address1!,
+                    city: data.city!,
+                    state: data.state!,
+                    postalCode: data.postalCode!,
+                    dateOfBirth: data.dateOfBirth!,
+                    ssn: data.ssn!,
+                    email: data.email,
+                    password: data.password,
                 }
+
+                const newUser = await signUp(userData);
+
+                setUser(newUser);
+            }
             
             if (type === 'sign-in') {
                 const response = await signIn({
